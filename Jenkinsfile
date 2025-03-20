@@ -7,7 +7,6 @@ pipeline {
                 docker{
                     image 'amazon/aws-cli'
                     reuseNode true
-                    // args '--entrypoint=""'
                 }
             }
             steps{
@@ -15,8 +14,6 @@ pipeline {
                  {
                     sh '''
                         --version
-                        s3 ls 
-                        
                     '''
                 }
             }
