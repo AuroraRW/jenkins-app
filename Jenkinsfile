@@ -51,8 +51,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'my-temp', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {   
                     sh '''
-                        asw --version
-                        asw s3 ls
+                        aws --version
+                        aws s3 ls
                     '''
                 }
             }
