@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    enivronment {
+                AWS_S3_BUCKET = 'temp-20250320'
+    }
     stages {
         
         stage('Build') {
@@ -48,9 +50,7 @@ pipeline {
                     args '--entrypoint=""'
                 }
             }
-            enivronment {
-                AWS_S3_BUCKET = 'temp-20250320'
-            }
+            
             steps {
                 withCredentials([usernamePassword(credentialsId: 'my-temp', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {   
                     sh '''
