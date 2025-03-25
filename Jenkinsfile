@@ -51,7 +51,8 @@ pipeline {
             //     AWS_S3_BUCKET = 'temp-20250320'
             // }
             steps {
-                // withCredentials([usernamePassword(credentialsId: 'my-temp', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {   
+                withCredentials([usernamePassword(credentialsId: 'my-s3-key', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) 
+                {   
                     sh '''
                         aws --version
                         aws s3 ls
@@ -59,7 +60,7 @@ pipeline {
                         # aws s3 cp index.html s3://temp-20250320/index.html
                         # aws s3 sync build s3://$AWS_S3_BUCKET
                     '''
-                // }
+                }
             }
         }
     }
