@@ -56,8 +56,8 @@ pipeline {
                     sh '''
                         aws --version
                         aws s3 ls
-                        # echo "Hello S3!" > index.html
-                        # aws s3 cp index.html s3://temp-20250320/index.html
+                        echo "Hello S3!" > index.html
+                        aws s3 cp index.html s3://my-bucket-20250125/index.html
                         # aws s3 sync build s3://$AWS_S3_BUCKET
                     '''
                 }
