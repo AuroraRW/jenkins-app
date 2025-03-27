@@ -47,7 +47,7 @@ pipeline {
                 docker {
                     image 'amazon/aws-cli'
                     reuseNode true
-                    args '--entrypoint=""'
+                    args '-u root --entrypoint=""'
                 }
             }
             
@@ -56,8 +56,10 @@ pipeline {
                 {   
                     sh '''
                         aws --version
-                        aws ecs register-task-definition --cli-input-json file://aws/task-definition.json
-                        aws ecs update-service --cluster my-new-Cluster-Prod --service my-new-Service-Prod --task-definition my-new-TaskDefinition-Prod:2
+                        yum install jq -y
+                        
+                        LATEST_TD_REVISTION = $(aws ecs register-task-definition --cli-input-json file://aws/task-definition.json | jq '.taskDefinition.revision')
+                        aws ecs update-service --cluster my-new-Cluster-Prod --service my-new-Service-Prod --task-definition my-new-TaskDefinition-Prod:$LATEST_TD_REVISTION
                     '''
                 }
             }
