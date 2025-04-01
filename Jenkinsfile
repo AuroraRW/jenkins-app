@@ -2,6 +2,8 @@ pipeline {
     agent any
     environment{
         AWS_DEFAULT_REGION = 'us-east-2'
+        AWS_DOCKER_REGISTRY = '612634926349.dkr.ecr.us-east-2.amazonaws.com'
+        APP_NAME = 'my-react-app-image'
     }
     stages {
         stage('Build') {
@@ -53,6 +55,8 @@ pipeline {
                 sh '''
                     amazon-linux-extras install docker
                     docker build -t my-docker-image .
+                    aws ecr get-login-password | docker login --username AWS --password-stdin $AWS_DOCKER_REGISTRY
+                    docker push $AWS_DOCKER_REGISTRY/$APP_NAME:latest
                 '''
             }
         }
