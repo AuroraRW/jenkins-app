@@ -52,12 +52,15 @@ pipeline {
                 }
             }
             steps{
-                sh '''
-                    amazon-linux-extras install docker
-                    docker build -t my-docker-image .
-                    aws ecr get-login-password | docker login --username AWS --password-stdin $AWS_DOCKER_REGISTRY
-                    docker push $AWS_DOCKER_REGISTRY/$APP_NAME:latest
-                '''
+                 withCredentials([usernamePassword(credentialsId: 'my-s3-key', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) 
+                { 
+                    sh '''
+                        amazon-linux-extras install docker
+                        docker build -t my-docker-image .
+                        aws ecr get-login-password | docker login --username AWS --password-stdin $AWS_DOCKER_REGISTRY
+                        docker push $AWS_DOCKER_REGISTRY/$APP_NAME:latest
+                    '''
+                }
             }
         }
         // stage('Deploy to AWS') {
