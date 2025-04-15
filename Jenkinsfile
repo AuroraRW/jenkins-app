@@ -3,7 +3,7 @@ pipeline {
     environment{
         AWS_DEFAULT_REGION = 'us-east-2'
         AWS_DOCKER_REGISTRY = '612634926349.dkr.ecr.us-east-2.amazonaws.com'
-        APP_NAME = 'my-react-app-image'
+        APP_NAME = 'FinalReactApp-image'
     }
     stages {
         stage('Build') {
@@ -52,7 +52,7 @@ pipeline {
                 }
             }
             steps{
-                 withCredentials([usernamePassword(credentialsId: 'my-s3-key', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) 
+                 withCredentials([usernamePassword(credentialsId: 'my-ecs-key', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) 
                 { 
                     sh '''
                         amazon-linux-extras install docker
@@ -73,14 +73,14 @@ pipeline {
             }
             
             steps {
-                withCredentials([usernamePassword(credentialsId: 'my-s3-key', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) 
+                withCredentials([usernamePassword(credentialsId: 'my-ecs-key', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) 
                 {   
                     sh '''
                         aws --version
                         yum install jq -y
                         
                         LATEST_TD_REVISION=$(aws ecs register-task-definition --cli-input-json file://aws/task-definition.json | jq '.taskDefinition.revision')
-                        aws ecs update-service --cluster my-new-Cluster-Prod --service my-new-Service-Prod --task-definition my-new-TaskDefinition-Prod:$LATEST_TD_REVISION
+                        aws ecs update-service --cluster FinalReactApp-Cluster-Prod --service FinalReactApp-Service-Prod --task-definition FinalReactApp-TaskDefinition-Prod:$LATEST_TD_REVISION
                     '''
                 }
             }

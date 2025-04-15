@@ -2,11 +2,11 @@
     "requiresCompatibilities": [
         "FARGATE"
     ],
-    "family": "my-new-TaskDefinition-Prod",
+    "family": "FinalReactApp-TaskDefinition-Prod",
     "containerDefinitions": [
         {
             "name": "myNewImage",
-            "image": "612634926349.dkr.ecr.us-east-2.amazonaws.com/my-react-app-image:latest",
+            "image": "612634926349.dkr.ecr.us-east-2.amazonaws.com/FinalReactApp-image:latest",
             "portMappings": [
                 {
                     "name": "ngnix-80-tcp",
