@@ -3,7 +3,7 @@ pipeline {
     environment{
         AWS_DEFAULT_REGION = 'us-east-2'
         AWS_DOCKER_REGISTRY = '612634926349.dkr.ecr.us-east-2.amazonaws.com'
-        APP_NAME = 'FinalReactApp-image'
+        APP_NAME = 'final-image'
     }
     stages {
         stage('Build') {
